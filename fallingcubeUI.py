@@ -7,7 +7,7 @@ except:
 import maya.OpenMayaUI as omui
 import os
 
-IMAGE_DIR = 'D:/661310547' 
+IMAGE_DIR = 'D:/661310547'
 
 class FallingCubeDialog(QtWidgets.QDialog):
     def __init__(self, parent=None):
@@ -30,7 +30,6 @@ class FallingCubeDialog(QtWidgets.QDialog):
         self.mainLayout = QtWidgets.QVBoxLayout(self)
 
         self.headerFrame = QtWidgets.QFrame()
-        self.headerFrame.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.headerFrame.setStyleSheet("background-color: #E6A891; border-radius: 10px;")
         headerLayout = QtWidgets.QVBoxLayout(self.headerFrame)
         headerLabel = QtWidgets.QLabel("✨ AMAZING FALLINGCUBE ✨")
@@ -52,6 +51,7 @@ class FallingCubeDialog(QtWidgets.QDialog):
 
         self.spawnLayout = QtWidgets.QFormLayout()
         self.mainLayout.addLayout(self.spawnLayout)
+
         self.spawnSlider = QtWidgets.QSlider(QtCore.Qt.Horizontal)
         self.spawnSlider.setRange(1, 20)
         self.spawnSlider.setValue(5)
@@ -80,7 +80,6 @@ class FallingCubeDialog(QtWidgets.QDialog):
         self.mainLayout.addLayout(self.buttonLayout)
 
         self.controlFrame = QtWidgets.QFrame()
-        self.controlFrame.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.controlFrame.setStyleSheet("background-color: #E6A891; border-radius: 10px;")
         controlLayout = QtWidgets.QVBoxLayout(self.controlFrame)
         controlLabel = QtWidgets.QLabel("CONTROL PLAYER")
@@ -90,14 +89,24 @@ class FallingCubeDialog(QtWidgets.QDialog):
 
         btnLayout = QtWidgets.QHBoxLayout()
         for img_file in ["left.png", "right.png"]:
-            lbl = QtWidgets.QLabel()
-            pixmap = QtGui.QPixmap(os.path.join(IMAGE_DIR, img_file))
-            lbl.setPixmap(pixmap.scaled(64,64, QtCore.Qt.KeepAspectRatio, QtCore.Qt.SmoothTransformation))
-            lbl.setAlignment(QtCore.Qt.AlignCenter)
-            btnLayout.addWidget(lbl)
+            img_path = os.path.join(IMAGE_DIR, img_file)
+            btn = QtWidgets.QPushButton()
+            btn.setIcon(QtGui.QIcon(img_path))
+            btn.setIconSize(QtCore.QSize(64, 64))
+            btn.setFixedSize(72, 72)
+            btn.setStyleSheet("""
+                QPushButton {
+                    background-color: #FADCD9;
+                    border-radius: 10px;
+                }
+                QPushButton:hover {
+                    background-color: #F8BFB3;
+                }
+            """)
+            btnLayout.addWidget(btn)
         controlLayout.addLayout(btnLayout)
-
         self.mainLayout.addWidget(self.controlFrame)
+
         self.mainLayout.addStretch()
 
 
